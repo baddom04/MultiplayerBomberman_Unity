@@ -459,7 +459,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444993130}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -571,7 +571,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 573865960}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -831,7 +831,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 21, z: -35}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -849,9 +849,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3283a761fb5f39541823933f05b77ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1319508796}
+  player1: {fileID: 1319508796}
   player2: {fileID: 310370131}
-  originalHeight: 30
+  originalHeight: 20
 --- !u!1 &1290043223
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,7 +956,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290043223}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -1142,8 +1142,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   up: w
-  down: a
-  left: s
+  down: s
+  left: a
   right: d
   bombPrefab: {fileID: 6301814725397323151, guid: 37cdf179b7c0b424db99db7eacdc08d3, type: 3}
   bombWaitingTime: 3
@@ -1288,7 +1288,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602607653}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0

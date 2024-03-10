@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -26,22 +24,8 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                if ((i == player1.i && j == player1.j) || (i == player2.i && j == player2.j))
-                {
-                    grid[i, j].GetComponent<Renderer>().material.color = Color.gray;
-                }
-                else if (i % 2 != 1 || j % 2 != 1)
-                {
-                    grid[i, j].GetComponent<Renderer>().material.color = Color.green;
-                }
-            }
-        }
-        if(player1.CoordinateChanged()) Debug.Log("sldjfbl");
-
+        //TODO: call the changeTileColors function only when its necessary.
+        ChangeTileColors();
         if (gameOn && player1.isActiveAndEnabled && player2.isActiveAndEnabled)
         {
             if (Input.GetKeyDown(KeyCode.Space)) placeBomb(player1);
@@ -66,6 +50,23 @@ public class GameController : MonoBehaviour
             if (Input.GetKey(KeyCode.Q))
             {
                 Application.Quit();
+            }
+        }
+    }
+    private void ChangeTileColors()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if ((i == player1.i && j == player1.j) || (i == player2.i && j == player2.j))
+                {
+                    grid[i, j].GetComponent<Renderer>().material.color = new Color(0.0f, 0.7f, 0.0f);
+                }
+                else if (i % 2 != 1 || j % 2 != 1)
+                {
+                    grid[i, j].GetComponent<Renderer>().material.color = Color.green;
+                }
             }
         }
     }

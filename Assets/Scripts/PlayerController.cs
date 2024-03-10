@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,16 +25,20 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         last_i = (int)Math.Floor((transform.position.x + 45) / 10);
         last_j = 8 - (int)Math.Floor((transform.position.z + 45) / 10);
-        bombRadius = 2;
+        bombRadius = 1;
     }
     void Update()
     {
-        float moveVertical = Input.GetAxis("Vertical");
-        float moveHorizontal = Input.GetAxis("Horizontal");
+        // float moveVertical = Input.GetAxis("Vertical");
+        // float moveHorizontal = Input.GetAxis("Horizontal");
 
-        if(MoveCondition()){
-            rb.velocity = new Vector3(moveHorizontal, 0.0f, moveVertical) * speed;
-        }   
+        // if(MoveCondition()){
+        //     rb.velocity = new Vector3(moveHorizontal, 0.0f, moveVertical) * speed;
+        // }
+        if(Input.GetKey(left)) rb.velocity = Vector3.left * speed; 
+        if(Input.GetKey(right)) rb.velocity = Vector3.right * speed; 
+        if(Input.GetKey(up)) rb.velocity = Vector3.forward * speed; 
+        if(Input.GetKey(down)) rb.velocity = Vector3.back * speed; 
 
         i = 8 - (int)Math.Floor((transform.position.z + 45) / 10);
         j = (int)Math.Floor((transform.position.x + 45) / 10);
