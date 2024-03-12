@@ -7,14 +7,15 @@ public class CameraScript : MonoBehaviour
 {
     public Transform player1;
     public Transform player2;
-    public float originalHeight;
+    private float originalHeight = 20f;
+    private float zOffset = -28f;
     void LateUpdate() { 
         Vector3 pos = (player1.position + player2.position) / 2;
         float height = Vector3.Distance(player1.position, player2.position);
         transform.position = new Vector3(
-            Mathf.Lerp(transform.position.x, pos.x, 0.5f), 
-            Mathf.Lerp(transform.position.y, originalHeight + height, 1f), 
-            Mathf.Lerp(transform.position.z, pos.z, 0.5f)
+            pos.x, 
+            originalHeight + height, 
+            pos.z + zOffset
         );
     }
 }

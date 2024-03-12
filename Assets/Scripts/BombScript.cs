@@ -9,31 +9,13 @@ public class BombScript : MonoBehaviour
     [HideInInspector] public int j;
     [HideInInspector] public int radius;
     public GameObject bombEffectPrefab;
-    [HideInInspector] public List<GameObject> bombEffects;
-
-    public void bombEffectsAnimation(float speed)
-    {
-        StartCoroutine(Animation(speed));
-    }
+    [HideInInspector] private List<GameObject> bombEffects;
     private IEnumerator Animation(float speed)
     {
-        while (bombEffects[0].transform.localScale.x < 10)
-        {
-            foreach (GameObject be in bombEffects)
-            {
-                be.transform.localScale += new Vector3(speed, speed, speed);
-            }
-            yield return new WaitForSeconds(0.01f);
+        foreach(GameObject be in bombEffects){
+            be.GetComponent<BombEffectTrigger>().doEffect();
         }
-        yield return new WaitForSeconds(0.2f);
-        while (bombEffects[0].transform.localScale.x > 0)
-        {
-            foreach (GameObject be in bombEffects)
-            {
-                be.transform.localScale -= new Vector3(speed, speed, speed);
-            }
-            yield return new WaitForSeconds(0.01f);
-        }
+        yield return new WaitForSeconds(1f);
         foreach (GameObject be in bombEffects)
         {
             Destroy(be);
@@ -43,7 +25,10 @@ public class BombScript : MonoBehaviour
 
     public void Detonation()
     {
-        bombEffects.Add(bombEffectInstantiation(0, 0));
+        bombEffects = new List<GameObject>
+        {
+            bombEffectInstantiation(0, 0)
+        };
         int r = 1;
         while(i - r >= 0 && ((i - r) % 2 == 0 || j % 2 == 0) && r <= radius){
             bombEffects.Add(bombEffectInstantiation(-r, 0));
@@ -65,7 +50,7 @@ public class BombScript : MonoBehaviour
             r++;
         }
         transform.localScale = Vector3.zero;
-        bombEffectsAnimation(0.5f);
+        StartCoroutine(Animation(0.5f));
     }
     private GameObject bombEffectInstantiation(int offsetI, int offsetJ)
     {
@@ -73,7 +58,7 @@ public class BombScript : MonoBehaviour
             bombEffectPrefab,
             new Vector3(
                 (j + offsetJ) * 10 - 40,
-                5,
+                bombEffectPrefab.transform.localScale.y / 2, 
                 (8 - (i + offsetI)) * 10 - 40),
             Quaternion.Euler(0, 0, 0)
         );
