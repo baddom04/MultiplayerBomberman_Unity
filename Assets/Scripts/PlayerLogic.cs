@@ -32,7 +32,7 @@ public class PlayerLogic : MonoBehaviour
         j = (int)Math.Floor((transform.position.x + 45) / 10);
         if (CoordinateChanged())
         {
-            GameObject.FindWithTag("GameController").GetComponent<GameController>().ChangeTileColors();
+            // GameObject.FindWithTag("GameController").GetComponent<GameController>().ChangeTileColors();
             last_i = i;
             last_j = j;
             if (isBomb) bomb.GetComponent<Collider>().isTrigger = false;

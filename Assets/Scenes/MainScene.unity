@@ -576,11 +576,6 @@ MonoBehaviour:
   isBomb: 0
   last_i: 0
   last_j: 0
---- !u!4 &577378325 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8723782215367205755, guid: 199d7ef3d613d8b4e8d5a519e49f9ce3, type: 3}
-  m_PrefabInstance: {fileID: 577378318}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,7 +739,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Congratulations player1!
+  m_Text: 'Congratulations!
 
     Press R to restart!'
 --- !u!222 &736203446
@@ -851,8 +846,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3283a761fb5f39541823933f05b77ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: {fileID: 577378325}
-  player2: {fileID: 2103721646}
 --- !u!1 &1290043223
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,7 +991,6 @@ MonoBehaviour:
   groundPrefab: {fileID: 8334170145511153902, guid: 14795b9be7335e845bf6ceefe4bb8816, type: 3}
   player1: {fileID: 577378320}
   player2: {fileID: 2103721641}
-  endText: {fileID: 736203445}
 --- !u!4 &1307570192
 Transform:
   m_ObjectHideFlags: 0
@@ -1383,8 +1375,3 @@ MonoBehaviour:
   isBomb: 0
   last_i: 0
   last_j: 0
---- !u!4 &2103721646 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4537412505004965663, guid: 8cfc28dfb62aede4196cb5ac4b39bbcb, type: 3}
-  m_PrefabInstance: {fileID: 2103721639}
-  m_PrefabAsset: {fileID: 0}

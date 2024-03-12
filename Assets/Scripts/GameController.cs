@@ -12,7 +12,6 @@ public class GameController : MonoBehaviour
     private Transform parentEnvironment;
     public PlayerLogic player1;
     public PlayerLogic player2;
-    public Text endText;
     private bool gameOn = true;
     private bool hasEndBeenCalled = false;
     private GameObject[,] grid = new GameObject[9, 9];
@@ -20,7 +19,6 @@ public class GameController : MonoBehaviour
     {
         parentEnvironment = GameObject.FindWithTag("Environment").transform;
         InitiateMap();
-        endText.gameObject.SetActive(false);
     }
     void Update()
     {
@@ -39,7 +37,7 @@ public class GameController : MonoBehaviour
             if (!hasEndBeenCalled)
             {
                 hasEndBeenCalled = true;
-                StartCoroutine(End());
+                Camera.main.GetComponent<CameraScript>().TheEnd();
             }
             if (Input.GetKey(KeyCode.R))
             {
@@ -57,15 +55,6 @@ public class GameController : MonoBehaviour
         grid[player2.last_i, player2.last_j].GetComponent<Renderer>().material.color = Color.green;
         grid[player1.i, player1.j].GetComponent<Renderer>().material.color = new Color(0.0f, 0.7f, 0.0f);
         grid[player2.i, player2.j].GetComponent<Renderer>().material.color = new Color(0.0f, 0.7f, 0.0f);
-    }
-    private IEnumerator End()
-    {
-        yield return new WaitForSeconds(0.5f);
-        for(int i = 0; i < 30; i++){
-            Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.Euler(0, 0, 0), 0.01f);
-        }
-        endText.gameObject.SetActive(true);
-        endText.text = "Congratulations! Press R to restart! Press Q to quit!";
     }
     private void InitiateMap()
     {
