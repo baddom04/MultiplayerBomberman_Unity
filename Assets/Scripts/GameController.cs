@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     private bool gameOn = true;
     private bool hasEndBeenCalled = false;
     private GameObject[,] grid = new GameObject[9, 9];
+    private float boulderSpawnY = -1;
     void Start()
     {
         parentEnvironment = GameObject.FindWithTag("Environment").transform;
@@ -64,7 +65,7 @@ public class GameController : MonoBehaviour
             {
                 if (j % 2 == 1 && i % 2 == 1)
                 {
-                    Instantiate(blockWallPrefab, new Vector3(j * 10 - 40, blockWallPrefab.transform.localScale.y / 2, (8 - i) * 10 - 40), Quaternion.identity, parentEnvironment);
+                    Instantiate(blockWallPrefab, new Vector3(j * 10 - 40, boulderSpawnY, (8 - i) * 10 - 40), Quaternion.identity, parentEnvironment);
                 }
                 else
                 {
