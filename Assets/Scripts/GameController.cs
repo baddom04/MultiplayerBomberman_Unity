@@ -7,33 +7,30 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject blockWallPrefab;
-    public GameObject groundPrefab;
+    public GameObject boulderPrefab;
     private Transform parentEnvironment;
-    public PlayerLogic player1;
-    public PlayerLogic player2;
-    private bool gameOn = true;
+    private PlayerLogic player1;
+    private PlayerLogic player2;
+    [HideInInspector]
+    public static bool gameOn = true;
     private bool hasEndBeenCalled = false;
-    private GameObject[,] grid = new GameObject[9, 9];
     private float boulderSpawnY = -1;
+    private float gridSize = 9;
     void Start()
     {
+        player1 = GameObject.Find("Player1").GetComponent<PlayerLogic>();
+        player2 = GameObject.Find("Player2").GetComponent<PlayerLogic>();
         parentEnvironment = GameObject.FindWithTag("Environment").transform;
         InitiateMap();
     }
     void Update()
     {
-        if (gameOn && player1.isActiveAndEnabled && player2.isActiveAndEnabled)
+        if (gameOn)
         {
-            if (Input.GetKeyDown(KeyCode.M)) placeBomb(player1);
-            if (Input.GetKeyDown(KeyCode.Space)) placeBomb(player2);
+            if (Input.GetKeyDown(KeyCode.M)) player1.PlaceBomb();
+            if (Input.GetKeyDown(KeyCode.Space)) player2.PlaceBomb();
         }
         else
-        {
-            gameOn = false;
-        }
-
-        if (!gameOn)
         {
             if (!hasEndBeenCalled)
             {
@@ -41,41 +38,22 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<CameraScript>().TheEnd();
             }
             if (Input.GetKey(KeyCode.R))
-            {
-                SceneManager.LoadScene("MainScene");
-            }
+                SceneManager.LoadScene("Main");
             if (Input.GetKey(KeyCode.Q))
-            {
                 Application.Quit();
-            }
         }
-    }
-    public void ChangeTileColors()
-    {
-        grid[player1.last_i, player1.last_j].GetComponent<Renderer>().material.color = Color.green;
-        grid[player2.last_i, player2.last_j].GetComponent<Renderer>().material.color = Color.green;
-        grid[player1.i, player1.j].GetComponent<Renderer>().material.color = new Color(0.0f, 0.7f, 0.0f);
-        grid[player2.i, player2.j].GetComponent<Renderer>().material.color = new Color(0.0f, 0.7f, 0.0f);
     }
     private void InitiateMap()
     {
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < gridSize; i++)
         {
-            for (int j = 0; j < 9; j++)
+            for (int j = 0; j < gridSize; j++)
             {
                 if (j % 2 == 1 && i % 2 == 1)
                 {
-                    Instantiate(blockWallPrefab, new Vector3(j * 10 - 40, boulderSpawnY, (8 - i) * 10 - 40), Quaternion.identity, parentEnvironment);
-                }
-                else
-                {
-                    grid[i, j] = Instantiate(groundPrefab, new Vector3(j * 10 - 40, 0, (8 - i) * 10 - 40), Quaternion.identity, parentEnvironment);
+                    Instantiate(boulderPrefab, new Vector3(j * 10 - 40, boulderSpawnY, (8 - i) * 10 - 40), Quaternion.identity, parentEnvironment);
                 }
             }
         }
-    }
-    private void placeBomb(PlayerLogic player)
-    {
-        if (!player.isBomb) player.Bomb();
     }
 }

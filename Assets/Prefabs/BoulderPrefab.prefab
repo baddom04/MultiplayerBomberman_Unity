@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5293580881276105157}
   - component: {fileID: 6369845905361287604}
   m_Layer: 0
-  m_Name: BlockWall
+  m_Name: BoulderPrefab
   m_TagString: BlockWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

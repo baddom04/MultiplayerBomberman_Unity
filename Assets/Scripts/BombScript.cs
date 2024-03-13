@@ -10,12 +10,13 @@ public class BombScript : MonoBehaviour
     [HideInInspector] public int radius;
     public GameObject bombEffectPrefab;
     [HideInInspector] private List<GameObject> bombEffects;
-    private IEnumerator Animation(float speed)
+    private float particleDuration = 1f;
+    private IEnumerator Animation()
     {
         foreach(GameObject be in bombEffects){
             be.GetComponent<BombEffectTrigger>().doEffect();
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(particleDuration);
         foreach (GameObject be in bombEffects)
         {
             Destroy(be);
@@ -49,8 +50,8 @@ public class BombScript : MonoBehaviour
             bombEffects.Add(bombEffectInstantiation(0, r));
             r++;
         }
-        transform.localScale = Vector3.zero;
-        StartCoroutine(Animation(0.5f));
+        GetComponent<Renderer>().enabled = false;
+        StartCoroutine(Animation());
     }
     private GameObject bombEffectInstantiation(int offsetI, int offsetJ)
     {
