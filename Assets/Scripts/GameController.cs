@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
     public static bool gameOn = true;
     private bool hasEndBeenCalled = false;
     private float boulderSpawnY = -1;
-    [SerializeField] float gridSize = 9;
+    public float gridSize = 9;
     void Start()
     {
         player1 = GameObject.Find("Player1").GetComponent<PlayerLogic>();
@@ -45,8 +45,15 @@ public class GameController : MonoBehaviour
     }
     private void InitiateMap()
     {
+        PlayerPositions();
         OuterWalls();
         InnerWalls();
+    }
+    private void PlayerPositions(){
+        player1.transform.position = new Vector3((gridSize - Mathf.Ceil(gridSize / 2)) * 10, player1.transform.position.y, player1.transform.position.z);
+        Debug.Log((gridSize - Mathf.Ceil(gridSize / 2)) * -10);
+        Debug.Log(player1.transform.position.x);
+        player2.transform.position = new Vector3((gridSize - Mathf.Ceil(gridSize / 2)) * -10, player2.transform.position.y, player2.transform.position.z);
     }
     private void OuterWalls()
     {

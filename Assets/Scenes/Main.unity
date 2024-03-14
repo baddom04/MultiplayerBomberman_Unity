@@ -1106,7 +1106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5429491833233091698, guid: 199d7ef3d613d8b4e8d5a519e49f9ce3, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5906073401373801208, guid: 199d7ef3d613d8b4e8d5a519e49f9ce3, type: 3}
       propertyPath: m_Constraints
@@ -2489,7 +2489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boulderPrefab: {fileID: 5293580881276105155, guid: 655508a5cb2cbbc49a9c34efa70ba25c, type: 3}
-  gridSize: 7
+  gridSize: 5
 --- !u!4 &1307570192
 Transform:
   m_ObjectHideFlags: 0
@@ -3640,6 +3640,10 @@ PrefabInstance:
     - target: {fileID: 8673783518554135396, guid: 8cfc28dfb62aede4196cb5ac4b39bbcb, type: 3}
       propertyPath: m_Center.y
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8673783518554135396, guid: 8cfc28dfb62aede4196cb5ac4b39bbcb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cfc28dfb62aede4196cb5ac4b39bbcb, type: 3}

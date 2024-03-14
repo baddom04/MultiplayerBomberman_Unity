@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public string[] keys = new string[4];
     public Dictionary<string, int> keyBinds = new Dictionary<string, int>();
     private void Start() {
+        bound = GameObject.FindWithTag("GameController").GetComponent<GameController>().gridSize;
+        bound = (bound - Mathf.Ceil(bound / 2)) * 10 + 5;
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         for(int i = 0; i < 4; i++){
