@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
     public int gridSize = 9;
     private float crateChance = 0.15f;
     private float formula;
-    private float maxGridIndex;
+    private int maxGridIndex;
     void Start()
     {
         maxGridIndex = gridSize - 1;
@@ -54,8 +54,9 @@ public class GameController : MonoBehaviour
         InnerWallsAndCrates();
     }
     private void PlayerPositions(){
-        player1.transform.position = new Vector3((gridSize - gridSize / 2 + 1) * 10, player1.transform.position.y, player1.transform.position.z);
-        player2.transform.position = new Vector3((gridSize - gridSize / 2 + 1) * -10, player2.transform.position.y, player2.transform.position.z);
+        int x = gridSize / 2 * 10;
+        player1.transform.position = new Vector3(x, player1.transform.position.y, player1.transform.position.z);
+        player2.transform.position = new Vector3(-x, player2.transform.position.y, player2.transform.position.z);
     }
     private void OuterWalls()
     {
@@ -63,14 +64,18 @@ public class GameController : MonoBehaviour
         {
             for (int j = 0; j < (gridSize + 2); j++)
             {
-                Instantiate(boulderPrefab, new Vector3((j - gridSize / 2 - 1) * 10, boulderSpawnY, i * (gridSize / 2 + 1) * 10), Quaternion.identity, parentEnvironment);
+                int x = (j - gridSize / 2 - 1) * 10;
+                int y = i * (gridSize / 2 + 1) * 10;
+                Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, y), Quaternion.identity, parentEnvironment);
             }
         }
         for (int i = -1; i < 2; i += 2)
         {
             for (int j = 0; j < gridSize; j++)
             {
-                Instantiate(boulderPrefab, new Vector3(i * (gridSize / 2 + 1) * 10, boulderSpawnY, (j - gridSize / 2) * 10), Quaternion.identity, parentEnvironment);
+                int x = i * (gridSize / 2 + 1) * 10;
+                int y = (j - gridSize / 2) * 10;
+                Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, y), Quaternion.identity, parentEnvironment);
             }
         }
     }
@@ -80,12 +85,14 @@ public class GameController : MonoBehaviour
         {
             for (int j = 0; j < gridSize; j++)
             {
+                int x = (j - gridSize / 2) * 10;
+                int y = (maxGridIndex - i - gridSize / 2) * 10;
                 if (j % 2 == 1 && i % 2 == 1)
                 {
-                    Instantiate(boulderPrefab, new Vector3((j - gridSize / 2) * 10, boulderSpawnY, (maxGridIndex - i - gridSize / 2) * 10), Quaternion.identity, parentEnvironment);
+                    Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, y), Quaternion.identity, parentEnvironment);
                 }
                 else if(CalculateChace() && NotInPlayer(i, j)){
-                    Instantiate(cratePrefab, new Vector3((j - gridSize / 2) * 10, 0, (maxGridIndex - i - gridSize / 2) * 10), Quaternion.identity, parentEnvironment);
+                    Instantiate(cratePrefab, new Vector3(x, 0, y), Quaternion.identity, parentEnvironment);
                 }
             }
         }

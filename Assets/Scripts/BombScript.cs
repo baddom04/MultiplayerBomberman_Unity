@@ -68,9 +68,9 @@ public class BombScript : MonoBehaviour
         return Instantiate(
             bombEffectPrefab,
             new Vector3(
-                (j + offsetJ) * 10 - gridSize / 2 * 10,
+                (j + offsetJ - gridSize / 2) * 10,
                 bombEffectPrefab.transform.localScale.y / 2,
-                (gridSize - 1 - (i + offsetI)) * 10 - gridSize / 2 * 10),
+                (gridSize - 1 - (i + offsetI) - gridSize / 2) * 10),
             Quaternion.Euler(0, 0, 0)
         );
     }
