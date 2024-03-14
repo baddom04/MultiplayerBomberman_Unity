@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
     public static bool gameOn = true;
     private bool hasEndBeenCalled = false;
     private float boulderSpawnY = -1;
-    private float gridSize = 9;
+    [SerializeField] float gridSize = 9;
     void Start()
     {
         player1 = GameObject.Find("Player1").GetComponent<PlayerLogic>();
@@ -45,13 +45,35 @@ public class GameController : MonoBehaviour
     }
     private void InitiateMap()
     {
+        OuterWalls();
+        InnerWalls();
+    }
+    private void OuterWalls()
+    {
+        for (int i = -1; i < 2; i += 2)
+        {
+            for (int j = 0; j < (gridSize + 2); j++)
+            {
+                Instantiate(boulderPrefab, new Vector3((j - (gridSize - Mathf.Ceil(gridSize / 2)) - 1) * 10, boulderSpawnY, i * Mathf.Ceil(gridSize / 2) * 10), Quaternion.identity, parentEnvironment);
+            }
+        }
+        for (int i = -1; i < 2; i += 2)
+        {
+            for (int j = 0; j < gridSize; j++)
+            {
+                Instantiate(boulderPrefab, new Vector3(i * Mathf.Ceil(gridSize / 2) * 10, boulderSpawnY, (j - (gridSize - Mathf.Ceil(gridSize / 2))) * 10), Quaternion.identity, parentEnvironment);
+            }
+        }
+    }
+    private void InnerWalls()
+    {
         for (int i = 0; i < gridSize; i++)
         {
             for (int j = 0; j < gridSize; j++)
             {
                 if (j % 2 == 1 && i % 2 == 1)
                 {
-                    Instantiate(boulderPrefab, new Vector3(j * 10 - 40, boulderSpawnY, (8 - i) * 10 - 40), Quaternion.identity, parentEnvironment);
+                    Instantiate(boulderPrefab, new Vector3((j - (gridSize - Mathf.Ceil(gridSize / 2))) * 10, boulderSpawnY, (gridSize - 1 - i - (gridSize - Mathf.Ceil(gridSize / 2))) * 10), Quaternion.identity, parentEnvironment);
                 }
             }
         }
