@@ -11,25 +11,25 @@ public class PlayerLogic : MonoBehaviour
     private int j;
     private Rigidbody rb;
     private BombScript bomb;
-    [HideInInspector]
-    public bool isBomb = false;
+    private bool isBomb = false;
     private int bombRadius = 1;
-    [HideInInspector]
-    public int last_i;
-    [HideInInspector]
-    public int last_j;
+    private int last_i;
+    private int last_j;
+    private int gridSize;
     void Start()
     {
+        gridSize = GameObject.FindWithTag("GameController").GetComponent<GameController>().gridSize;
         rb = GetComponent<Rigidbody>();
-        last_j = (int)Math.Floor((transform.position.x + 45) / 10);
-        last_i = 8 - (int)Math.Floor((transform.position.z + 45) / 10);
+        last_j = (int)((transform.position.x + 5 + (gridSize / 2) * 10) / 10);
+        last_i = (gridSize - 1) - (int)((transform.position.z + 5 + (gridSize / 2) * 10) / 10);
     }
     void Update()
     {
-        i = 8 - (int)Math.Floor((transform.position.z + 45) / 10);
-        j = (int)Math.Floor((transform.position.x + 45) / 10);
+        i = (gridSize - 1) - (int)((transform.position.z + 5 + (gridSize / 2) * 10) / 10);
+        j = (int)((transform.position.x + 5 + (gridSize / 2) * 10) / 10);
         if (CoordinateChanged())
         {
+            Debug.Log(i + " " + j);
             last_i = i;
             last_j = j;
             if (isBomb) bomb.GetComponent<Collider>().isTrigger = false;
@@ -40,7 +40,7 @@ public class PlayerLogic : MonoBehaviour
     {
         if (!isBomb)
         {
-            GameObject b = Instantiate(bombPrefab, new Vector3(j * 10 - 40, 2, (8 - i) * 10 - 40), Quaternion.identity);
+            GameObject b = Instantiate(bombPrefab, new Vector3(j * 10 - (gridSize / 2) * 10, 2, ((gridSize - 1) - i) * 10 - (gridSize / 2) * 10), Quaternion.identity);
             bomb = b.GetComponent<BombScript>();
             bomb.i = this.i;
             bomb.j = this.j;

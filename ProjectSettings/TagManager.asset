@@ -7,6 +7,8 @@ TagManager:
   - BlockWall
   - BombEffect
   - Environment
+  - Bomb
+  - Crate
   layers:
   - Default
   - TransparentFX

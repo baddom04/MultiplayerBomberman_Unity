@@ -11,9 +11,15 @@ public class BombScript : MonoBehaviour
     public GameObject bombEffectPrefab;
     [HideInInspector] private List<GameObject> bombEffects;
     private float particleDuration = 1f;
+    private int gridSize;
+    void Awake()
+    {
+        gridSize = GameObject.FindWithTag("GameController").GetComponent<GameController>().gridSize;
+    }
     private IEnumerator Animation()
     {
-        foreach(GameObject be in bombEffects){
+        foreach (GameObject be in bombEffects)
+        {
             be.GetComponent<BombEffectTrigger>().doEffect();
         }
         yield return new WaitForSeconds(particleDuration);
@@ -31,22 +37,26 @@ public class BombScript : MonoBehaviour
             bombEffectInstantiation(0, 0)
         };
         int r = 1;
-        while(i - r >= 0 && ((i - r) % 2 == 0 || j % 2 == 0) && r <= radius){
+        while (i - r >= 0 && ((i - r) % 2 == 0 || j % 2 == 0) && r <= radius)
+        {
             bombEffects.Add(bombEffectInstantiation(-r, 0));
             r++;
         }
         r = 1;
-        while(i + r <= 8 && ((i + r) % 2 == 0 || j % 2 == 0) && r <= radius){
+        while (i + r <= gridSize - 1 && ((i + r) % 2 == 0 || j % 2 == 0) && r <= radius)
+        {
             bombEffects.Add(bombEffectInstantiation(r, 0));
             r++;
         }
         r = 1;
-        while(j - r >= 0 && ((j - r) % 2 == 0 || i % 2 == 0) && r <= radius){
+        while (j - r >= 0 && ((j - r) % 2 == 0 || i % 2 == 0) && r <= radius)
+        {
             bombEffects.Add(bombEffectInstantiation(0, -r));
             r++;
         }
         r = 1;
-        while(j + r <= 8 && ((j + r) % 2 == 0 || i % 2 == 0) && r <= radius){
+        while (j + r <= gridSize - 1 && ((j + r) % 2 == 0 || i % 2 == 0) && r <= radius)
+        {
             bombEffects.Add(bombEffectInstantiation(0, r));
             r++;
         }
@@ -58,9 +68,9 @@ public class BombScript : MonoBehaviour
         return Instantiate(
             bombEffectPrefab,
             new Vector3(
-                (j + offsetJ) * 10 - 40,
-                bombEffectPrefab.transform.localScale.y / 2, 
-                (8 - (i + offsetI)) * 10 - 40),
+                (j + offsetJ) * 10 - gridSize / 2 * 10,
+                bombEffectPrefab.transform.localScale.y / 2,
+                (gridSize - 1 - (i + offsetI)) * 10 - gridSize / 2 * 10),
             Quaternion.Euler(0, 0, 0)
         );
     }
