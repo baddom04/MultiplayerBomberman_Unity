@@ -1134,6 +1134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 11368019182273911, guid: 1db47c5ef25154fb1806822c25335042, type: 3}
+  bombRadius: 1
 --- !u!1001 &607175963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2429,8 +2430,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boulderPrefab: {fileID: 5293580881276105155, guid: 655508a5cb2cbbc49a9c34efa70ba25c, type: 3}
   cratePrefab: {fileID: 134104, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
-  gameOn: 1
-  gridSize: 11
 --- !u!4 &1307570192
 Transform:
   m_ObjectHideFlags: 0
@@ -3606,6 +3605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 11368019182273911, guid: 1db47c5ef25154fb1806822c25335042, type: 3}
+  bombRadius: 2
 --- !u!1001 &2129241583
 PrefabInstance:
   m_ObjectHideFlags: 0

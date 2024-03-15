@@ -982,7 +982,7 @@ GameObject:
   - component: {fileID: 8708836707235718765}
   - component: {fileID: 8802333070823745431}
   - component: {fileID: 1287304557761030516}
-  - component: {fileID: 8673783518554135396}
+  - component: {fileID: 6640220932757341958}
   m_Layer: 0
   m_Name: Man2
   m_TagString: Untagged
@@ -1069,7 +1069,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!65 &8673783518554135396
+--- !u!65 &6640220932757341958
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

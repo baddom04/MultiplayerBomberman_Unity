@@ -8,15 +8,16 @@ public class CameraScript : MonoBehaviour
 {
     private Transform player1;
     private Transform player2;
-    public Text endText;
+    [SerializeField] private Text endText;
     private float originalHeight = 20f;
-    private float zOffset = -35f;
+    private float zOffset = -28f;
     private float reactionTime = 0.5f;
     private float lowerYBound = 50;
-    private float upperYBound = 90;
+    private float upperYBound;
     private float lowerZBound = -60;
     private void Start()
     {
+        upperYBound = GameController.gridSize * 10;
         player1 = GameObject.Find("Player1").transform;
         player2 = GameObject.Find("Player2").transform;
     }

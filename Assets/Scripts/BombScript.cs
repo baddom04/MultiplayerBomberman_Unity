@@ -8,20 +8,12 @@ public class BombScript : MonoBehaviour
     [HideInInspector] public int i;
     [HideInInspector] public int j;
     [HideInInspector] public int radius;
-    public GameObject bombEffectPrefab;
-    [HideInInspector] private List<GameObject> bombEffects;
+    [SerializeField] private GameObject bombEffectPrefab;
+    private List<GameObject> bombEffects;
     private float particleDuration = 1f;
-    private int gridSize;
-    void Awake()
-    {
-        gridSize = GameObject.FindWithTag("GameController").GetComponent<GameController>().gridSize;
-    }
+    private GameObject[,] level;
     private IEnumerator Animation()
     {
-        foreach (GameObject be in bombEffects)
-        {
-            be.GetComponent<BombEffectTrigger>().doEffect();
-        }
         yield return new WaitForSeconds(particleDuration);
         foreach (GameObject be in bombEffects)
         {
@@ -32,45 +24,50 @@ public class BombScript : MonoBehaviour
 
     public void Detonation()
     {
-        bombEffects = new List<GameObject>
+        bombEffects = new List<GameObject> { bombEffectInstantiation(0, 0) };
+        level = GameObject.Find("GameController").GetComponent<GameController>().level;
+        bool upFlag = true;
+        bool downFlag = true;
+        bool leftFlag = true;
+        bool rightFlag = true;
+        for (int r = 0; r <= radius; r++)
         {
-            bombEffectInstantiation(0, 0)
-        };
-        int r = 1;
-        while (i - r >= 0 && ((i - r) % 2 == 0 || j % 2 == 0) && r <= radius)
-        {
-            bombEffects.Add(bombEffectInstantiation(-r, 0));
-            r++;
-        }
-        r = 1;
-        while (i + r <= gridSize - 1 && ((i + r) % 2 == 0 || j % 2 == 0) && r <= radius)
-        {
-            bombEffects.Add(bombEffectInstantiation(r, 0));
-            r++;
-        }
-        r = 1;
-        while (j - r >= 0 && ((j - r) % 2 == 0 || i % 2 == 0) && r <= radius)
-        {
-            bombEffects.Add(bombEffectInstantiation(0, -r));
-            r++;
-        }
-        r = 1;
-        while (j + r <= gridSize - 1 && ((j + r) % 2 == 0 || i % 2 == 0) && r <= radius)
-        {
-            bombEffects.Add(bombEffectInstantiation(0, r));
-            r++;
+            BombEffectDirections(-r, 0, ref upFlag);
+            BombEffectDirections(r, 0, ref downFlag);
+            BombEffectDirections(0, -r, ref leftFlag);
+            BombEffectDirections(0, r, ref rightFlag);
         }
         GetComponent<Renderer>().enabled = false;
         StartCoroutine(Animation());
+    }
+    private void BombEffectDirections(int offsetI, int offsetJ, ref bool headingFlag){
+        if(InBounds(offsetI, offsetJ) && HitABoulder(offsetI, offsetJ) && headingFlag){
+            bombEffects.Add(bombEffectInstantiation(offsetI, offsetJ));
+            if(HitACrate(offsetI, offsetJ)) headingFlag = false;
+        }
+        else headingFlag = false;
+    }
+    private bool HitACrate(int offsetI, int offsetJ)
+    {
+        // if(InBounds(i + offsetI, j + offsetJ))
+            return level[i + offsetI, j + offsetJ] != null && level[i + offsetI, j + offsetJ].CompareTag("Crate");
+        // return false;
+    }
+    private bool InBounds(int offsetI, int offsetJ){
+        int maxBoundIndex = GameController.gridSize - 1;
+        return j + offsetJ <= maxBoundIndex && j + offsetJ >= 0 && i + offsetI >= 0 && i + offsetI <= maxBoundIndex;
+    }
+    private bool HitABoulder(int offsetI, int offsetJ){
+        return (j + offsetJ) % 2 == 0 || (i + offsetI) % 2 == 0;
     }
     private GameObject bombEffectInstantiation(int offsetI, int offsetJ)
     {
         return Instantiate(
             bombEffectPrefab,
             new Vector3(
-                (j + offsetJ - gridSize / 2) * 10,
+                (j + offsetJ - GameController.gridSize / 2) * 10,
                 bombEffectPrefab.transform.localScale.y / 2,
-                (gridSize - 1 - (i + offsetI) - gridSize / 2) * 10),
+                (GameController.gridSize - 1 - (i + offsetI) - GameController.gridSize / 2) * 10),
             Quaternion.Euler(0, 0, 0)
         );
     }
