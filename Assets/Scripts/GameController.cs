@@ -12,7 +12,6 @@ public class GameController : MonoBehaviour
     private Transform parentEnvironment;
     private PlayerLogic player1;
     private PlayerLogic player2;
-    [HideInInspector]
     public static bool gameOn = true;
     private bool hasEndBeenCalled = false;
     private float boulderSpawnY = -1;
@@ -20,8 +19,10 @@ public class GameController : MonoBehaviour
     private float crateChance = 0.15f;
     private int maxGridIndex = gridSize - 1;
     public GameObject[,] level = new GameObject[gridSize, gridSize];
+    [SerializeField] private Menu menuScript;
     void Start()
     {
+        menuScript = GameObject.Find("Canvas").GetComponent<Menu>();
         player1 = GameObject.Find("Player1").GetComponent<PlayerLogic>();
         player2 = GameObject.Find("Player2").GetComponent<PlayerLogic>();
         parentEnvironment = GameObject.FindWithTag("Environment").transform;
@@ -29,26 +30,18 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        if (gameOn)
+        if (gameOn && !PauseMenu.isPaused)
         {
             if (Input.GetKeyDown(KeyCode.M)) player1.PlaceBomb();
             if (Input.GetKeyDown(KeyCode.Space)) player2.PlaceBomb();
+            if(Input.GetKey(KeyCode.Escape)) PauseMenu.isPaused = true;
         }
-        else
+        else if(!gameOn)
         {
             if (!hasEndBeenCalled)
             {
                 hasEndBeenCalled = true;
                 Camera.main.GetComponent<CameraScript>().TheEnd();
-            }
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                gameOn = true;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                Application.Quit();
             }
         }
     }

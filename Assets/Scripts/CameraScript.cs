@@ -8,7 +8,6 @@ public class CameraScript : MonoBehaviour
 {
     private Transform player1;
     private Transform player2;
-    [SerializeField] private Text endText;
     private float originalHeight = 20f;
     private float zOffset = 10 - GameController.gridSize * 5;
     private float reactionTime = 0.5f;
@@ -48,7 +47,6 @@ public class CameraScript : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 0), 0.1f);
             yield return new WaitForSeconds(0.01f);
         }
-        endText.gameObject.SetActive(true);
-        endText.text = "Congratulations! Press R to restart! Press Q to quit!";
+        GameObject.Find("GameOverMenu").GetComponent<Menu>().Show();
     }
 }

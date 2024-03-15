@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (GameController.gameOn)
+        if (GameController.gameOn && !PauseMenu.isPaused)
         {
             MovePlayer();
             RestrictPlayer();
