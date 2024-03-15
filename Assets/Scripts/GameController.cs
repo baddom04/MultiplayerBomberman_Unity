@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     public static bool gameOn = true;
     private bool hasEndBeenCalled = false;
     private float boulderSpawnY = -1;
-    public static readonly int gridSize = 11;
+    public static int gridSize = 9;
     private float crateChance = 0.15f;
     private int maxGridIndex = gridSize - 1;
     public GameObject[,] level = new GameObject[gridSize, gridSize];

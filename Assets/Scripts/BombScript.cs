@@ -10,7 +10,7 @@ public class BombScript : MonoBehaviour
     [HideInInspector] public int radius;
     [SerializeField] private GameObject bombEffectPrefab;
     private List<GameObject> bombEffects;
-    private float particleDuration = 1f;
+    private float particleDuration = 0.8f;
     private GameObject[,] level;
     private IEnumerator Animation()
     {

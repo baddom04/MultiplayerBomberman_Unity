@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKey(keyBind.Key))
             {
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, keyBind.Value, 0), 0.1f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, keyBind.Value, 0), 0.2f);
                 keys++;
                 Run();
             }
