@@ -21,14 +21,13 @@ public class PlayerMovement : MonoBehaviour
             keyBinds.Add(keys[i], i * 90);
         }
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (GameController.gameOn)
         {
             MovePlayer();
             RestrictPlayer();
         }
-
     }
     private void MovePlayer()
     {

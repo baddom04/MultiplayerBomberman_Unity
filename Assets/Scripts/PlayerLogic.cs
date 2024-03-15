@@ -28,10 +28,24 @@ public class PlayerLogic : MonoBehaviour
         if (CoordinateChanged())
         {
             Debug.Log(i + " " + j);
-            last_i = i;
-            last_j = j;
-            if (isBomb) bomb.GetComponent<Collider>().isTrigger = false;
+            if (PlayerGoesWhereItShouldntBe())
+            {
+                int x = (last_j - GameController.gridSize / 2) * 10;
+                int z = (GameController.gridSize - 1 - last_i - GameController.gridSize / 2) * 10;
+                transform.position = new Vector3(x, 0, z);
+            }
+            else
+            {
+                last_i = i;
+                last_j = j;
+                if (isBomb) bomb.GetComponent<Collider>().isTrigger = false;
+            }
         }
+    }
+    private bool PlayerGoesWhereItShouldntBe()
+    {
+        GameObject[,] level = GameObject.Find("GameController").GetComponent<GameController>().level;
+        return level[i, j] != null;
     }
 
     public void PlaceBomb()
@@ -39,8 +53,8 @@ public class PlayerLogic : MonoBehaviour
         if (!isBomb)
         {
             int x = (j - GameController.gridSize / 2) * 10;
-            int y = (GameController.gridSize - 1 - i - GameController.gridSize / 2) * 10;
-            GameObject b = Instantiate(bombPrefab, new Vector3(x, 2, y), Quaternion.identity);
+            int z = (GameController.gridSize - 1 - i - GameController.gridSize / 2) * 10;
+            GameObject b = Instantiate(bombPrefab, new Vector3(x, 2, z), Quaternion.identity);
             bomb = b.GetComponent<BombScript>();
             bomb.i = this.i;
             bomb.j = this.j;

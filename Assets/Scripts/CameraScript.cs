@@ -10,14 +10,13 @@ public class CameraScript : MonoBehaviour
     private Transform player2;
     [SerializeField] private Text endText;
     private float originalHeight = 20f;
-    private float zOffset = -28f;
+    private float zOffset = 10 - GameController.gridSize * 5;
     private float reactionTime = 0.5f;
-    private float lowerYBound = 50;
-    private float upperYBound;
+    private float lowerYBound = -20 + GameController.gridSize * 10;
+    private float upperYBound = GameController.gridSize * 10;
     private float lowerZBound = -60;
     private void Start()
     {
-        upperYBound = GameController.gridSize * 10;
         player1 = GameObject.Find("Player1").transform;
         player2 = GameObject.Find("Player2").transform;
     }
@@ -25,11 +24,11 @@ public class CameraScript : MonoBehaviour
     {
         Vector3 pos = (player1.position + player2.position) / 2;
         float height = Vector3.Distance(player1.position, player2.position);
-        transform.position = new Vector3(
+        transform.position = Vector3.Lerp(transform.position, new Vector3(
             pos.x,
             originalHeight + height,
             pos.z + zOffset
-        );
+        ), 0.05f);
         if (transform.position.y < lowerYBound)
             transform.position = new Vector3(transform.position.x, lowerYBound, transform.position.z);
         if (transform.position.y > upperYBound)
