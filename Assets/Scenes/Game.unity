@@ -828,6 +828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 11368019182273911, guid: 1db47c5ef25154fb1806822c25335042, type: 3}
+  bombWaitingTime: 3
   i: 0
   j: 0
   maxBombCount: 1
@@ -836,6 +837,7 @@ MonoBehaviour:
   bombRadius: 1
   powerUpDuration: 12
   shield: {fileID: 1105129466}
+  detonator: 0
 --- !u!4 &577378325 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8723782215367205755, guid: 199d7ef3d613d8b4e8d5a519e49f9ce3, type: 3}
@@ -2047,9 +2049,10 @@ MonoBehaviour:
   - {fileID: 1192983798335586, guid: 9e928de923724f54ea836e735efdd8b6, type: 3}
   - {fileID: 107744, guid: 0782c4fdae5f1624ba26300a1dc7a0a7, type: 3}
   - {fileID: 132260, guid: 510349479745aac4b9209e9326e42601, type: 3}
+  - {fileID: 1744407837024274, guid: 2f3e352268bf84b45acf0d56b0b89518, type: 3}
   hasEndBeenCalled: 0
   crateChance: 0.2
-  pickupChance: 0.15
+  pickupChance: 1
 --- !u!4 &1307570192
 Transform:
   m_ObjectHideFlags: 0
@@ -2919,6 +2922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 11368019182273911, guid: 1db47c5ef25154fb1806822c25335042, type: 3}
+  bombWaitingTime: 3
   i: 0
   j: 0
   maxBombCount: 1
@@ -2927,6 +2931,7 @@ MonoBehaviour:
   bombRadius: 1
   powerUpDuration: 12
   shield: {fileID: 1342911672}
+  detonator: 0
 --- !u!4 &2103721646 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4537412505004965663, guid: 8cfc28dfb62aede4196cb5ac4b39bbcb, type: 3}

@@ -13,6 +13,7 @@ TagManager:
   - AddBomb
   - Speed
   - Shield
+  - Detonator
   layers:
   - Default
   - TransparentFX

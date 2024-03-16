@@ -27,6 +27,9 @@ public class Pickups : MonoBehaviour
                 case "Shield":
                     playerScript.ShieldUp();
                     break;
+                case "Detonator":
+                    playerScript.Detonator();
+                    break;
             }
             Destroy(gameObject);
         }

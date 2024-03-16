@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3070673838146040618}
   m_Layer: 0
   m_Name: RepairIcon
-  m_TagString: Shield
+  m_TagString: Detonator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -76,6 +76,7 @@ public class PlayerLogic : MonoBehaviour
             foreach(BombScript bs in bombs){
                 bs.Detonation();
             }
+            isOnBomb = false;
             bombs.Clear();
         }
     }
@@ -94,6 +95,7 @@ public class PlayerLogic : MonoBehaviour
     //Power-up functions
     public void IncreaseRadius() { bombRadius++; }
     public void AddBomb() { maxBombCount++; }
+    public void Detonator(){ detonator = true; }
     public bool IsShielded() { return shield.activeInHierarchy; }
     public void ShieldUp()
     {
