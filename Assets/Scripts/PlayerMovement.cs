@@ -6,6 +6,7 @@ using UnityEngine.Timeline;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
+    [SerializeField] private float upperSpeedBound = 16f;
     private int bound = 45;
     private Rigidbody rb;
     private Animator anim;
@@ -64,5 +65,9 @@ public class PlayerMovement : MonoBehaviour
     {
         anim.SetBool("Static_b", false);
         anim.SetFloat("Speed_f", 0f);
+    }
+    //Pickup functions
+    public void SpeedUp(){
+        if(speed < upperSpeedBound) speed = upperSpeedBound;
     }
 }

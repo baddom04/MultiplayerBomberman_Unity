@@ -15,6 +15,8 @@ public class PlayerLogic : MonoBehaviour
     [SerializeField] private int currentBombs = 0;
     [SerializeField] private bool isOnBomb = false;
     [SerializeField] private int bombRadius = 1;
+    [SerializeField] private float powerUpDuration = 10f;
+    [SerializeField] private GameObject shield;
     private int last_i;
     private int last_j;
     void Start()
@@ -40,7 +42,8 @@ public class PlayerLogic : MonoBehaviour
             {
                 last_i = i;
                 last_j = j;
-                if (isOnBomb){
+                if (isOnBomb)
+                {
                     bombs[bombs.Count - 1].GetComponent<Collider>().isTrigger = false;
                     isOnBomb = false;
                 }
@@ -82,10 +85,17 @@ public class PlayerLogic : MonoBehaviour
     }
 
     //Power-up functions
-    public void IncreaseRadius(){
-        bombRadius++;
+    public void IncreaseRadius() { bombRadius++; }
+    public void AddBomb() { maxBombCount++; }
+    public bool IsShielded() { return shield.activeInHierarchy; }
+    public void ShieldUp()
+    {
+        shield.SetActive(true);
+        StartCoroutine(ShieldDown());
     }
-    public void AddBomb(){
-        maxBombCount++;
+    IEnumerator ShieldDown()
+    {
+        yield return new WaitForSeconds(powerUpDuration);
+        shield.SetActive(false);
     }
 }

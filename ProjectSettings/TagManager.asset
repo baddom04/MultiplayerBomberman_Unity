@@ -11,6 +11,8 @@ TagManager:
   - Crate
   - AddRadius
   - AddBomb
+  - Speed
+  - Shield
   layers:
   - Default
   - TransparentFX

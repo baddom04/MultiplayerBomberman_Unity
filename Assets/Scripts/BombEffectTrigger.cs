@@ -11,8 +11,10 @@ public class BombEffectTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         Debug.Log(other.gameObject.tag);
         if(other.gameObject.CompareTag("Player")){
-            other.gameObject.SetActive(false);
-            GameController.gameOn = false;
+            if(!other.gameObject.GetComponent<PlayerLogic>().IsShielded()){
+                other.gameObject.SetActive(false);
+                GameController.gameOn = false;
+            }
         }
         if(other.gameObject.CompareTag("Crate")){
             Destroy(other.gameObject);
