@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,20 +8,21 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject boulderPrefab;
     [SerializeField] private GameObject cratePrefab;
+    public GameObject[,] level = new GameObject[gridSize, gridSize];
+    [SerializeField] private GameObject[] pickups;
     private Transform parentEnvironment;
     private PlayerLogic player1;
     private PlayerLogic player2;
     public static bool gameOn = true;
-    private bool hasEndBeenCalled = false;
+    [SerializeField] private bool hasEndBeenCalled = false;
     private float boulderSpawnY = -1;
-    public static int gridSize = 9;
-    private float crateChance = 0.15f;
+    public static int gridSize = 11;
     private int maxGridIndex = gridSize - 1;
-    public GameObject[,] level = new GameObject[gridSize, gridSize];
-    [SerializeField] private Menu menuScript;
+    [SerializeField] private float crateChance = 0.2f;
+    [SerializeField] private float pickupChance = 0.2f;
+
     void Start()
     {
-        menuScript = GameObject.Find("Canvas").GetComponent<Menu>();
         player1 = GameObject.Find("Player1").GetComponent<PlayerLogic>();
         player2 = GameObject.Find("Player2").GetComponent<PlayerLogic>();
         parentEnvironment = GameObject.FindWithTag("Environment").transform;
@@ -30,19 +30,17 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        if (gameOn && !PauseMenu.isPaused)
+        if (gameOn && !PauseMenu.isPausedState())
         {
             if (Input.GetKeyDown(KeyCode.M)) player1.PlaceBomb();
             if (Input.GetKeyDown(KeyCode.Space)) player2.PlaceBomb();
-            if(Input.GetKey(KeyCode.Escape)) PauseMenu.isPaused = true;
+            if (Input.GetKeyDown(KeyCode.Escape)) PauseMenu.Pause();
         }
-        else if(!gameOn)
+        else if (!gameOn && !hasEndBeenCalled)
         {
-            if (!hasEndBeenCalled)
-            {
-                hasEndBeenCalled = true;
-                Camera.main.GetComponent<CameraScript>().TheEnd();
-            }
+            hasEndBeenCalled = true;
+            GameObject.Find("PauseBtn").SetActive(false);
+            Camera.main.GetComponent<CameraScript>().TheEnd();
         }
     }
     private void InitiateMap()
@@ -90,19 +88,21 @@ public class GameController : MonoBehaviour
                 {
                     level[i, j] = Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, y), Quaternion.identity, parentEnvironment);
                 }
-                else if (CalculateChace() && NotInPlayer(i, j))
+                else if (CalculateChace(crateChance) && NotInPlayer(i, j))
                 {
                     level[i, j] = Instantiate(cratePrefab, new Vector3(x, 0, y), Quaternion.identity, parentEnvironment);
+                    if(CalculateChace(pickupChance))
+                        Instantiate(pickups[Random.Range(0, pickups.Length)], new Vector3(x, 3.5f, y), Quaternion.identity, parentEnvironment);
                 }
             }
         }
     }
-    private bool CalculateChace()
+    private bool CalculateChace(float chance)
     {
-        return UnityEngine.Random.Range(0, (int)(1 / crateChance)) == 0;
+        return UnityEngine.Random.Range(0, (int)(1 / chance)) == 0;
     }
     private bool NotInPlayer(int i, int j)
     {
-        return j != 0 && j != maxGridIndex && i != gridSize / 2;
+        return (j != 0 || i != gridSize / 2 ) && (j != maxGridIndex || i != gridSize / 2);
     }
 }

@@ -9,6 +9,8 @@ TagManager:
   - Environment
   - Bomb
   - Crate
+  - AddRadius
+  - AddBomb
   layers:
   - Default
   - TransparentFX

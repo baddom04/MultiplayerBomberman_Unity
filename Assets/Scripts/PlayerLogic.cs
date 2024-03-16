@@ -10,8 +10,10 @@ public class PlayerLogic : MonoBehaviour
     private int i;
     private int j;
     private Rigidbody rb;
-    private BombScript bomb;
-    private bool isBomb = false;
+    private List<BombScript> bombs = new List<BombScript>();
+    [SerializeField] private int maxBombCount = 1;
+    [SerializeField] private int currentBombs = 0;
+    [SerializeField] private bool isOnBomb = false;
     [SerializeField] private int bombRadius = 1;
     private int last_i;
     private int last_j;
@@ -38,7 +40,10 @@ public class PlayerLogic : MonoBehaviour
             {
                 last_i = i;
                 last_j = j;
-                if (isBomb) bomb.GetComponent<Collider>().isTrigger = false;
+                if (isOnBomb){
+                    bombs[bombs.Count - 1].GetComponent<Collider>().isTrigger = false;
+                    isOnBomb = false;
+                }
             }
         }
     }
@@ -50,27 +55,37 @@ public class PlayerLogic : MonoBehaviour
 
     public void PlaceBomb()
     {
-        if (!isBomb)
+        if (currentBombs < maxBombCount)
         {
             int x = (j - GameController.gridSize / 2) * 10;
             int z = (GameController.gridSize - 1 - i - GameController.gridSize / 2) * 10;
-            GameObject b = Instantiate(bombPrefab, new Vector3(x, 2, z), Quaternion.identity);
-            bomb = b.GetComponent<BombScript>();
-            bomb.i = this.i;
-            bomb.j = this.j;
-            bomb.radius = this.bombRadius;
-            isBomb = true;
-            StartCoroutine(BombCountDown());
+            BombScript b = Instantiate(bombPrefab, new Vector3(x, 2, z), Quaternion.identity).GetComponent<BombScript>();
+            b.i = i;
+            b.j = j;
+            b.radius = bombRadius;
+            bombs.Add(b);
+            currentBombs++;
+            isOnBomb = true;
+            StartCoroutine(BombCountDown(b));
         }
     }
     public bool CoordinateChanged()
     {
         return last_i != i || last_j != j;
     }
-    private IEnumerator BombCountDown()
+    private IEnumerator BombCountDown(BombScript bs)
     {
         yield return new WaitForSeconds(bombWaitingTime);
-        isBomb = false;
-        bomb.Detonation();
+        currentBombs--;
+        bombs.RemoveAt(0);
+        bs.Detonation();
+    }
+
+    //Power-up functions
+    public void IncreaseRadius(){
+        bombRadius++;
+    }
+    public void AddBomb(){
+        maxBombCount++;
     }
 }

@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private float animationDuration = 0.5f;
-    [SerializeField] private float distance = 80;
-    public static bool isPaused = false;
+    private static bool isPaused = false;
     private bool hasPauseBeenCalled = false;
+    [SerializeField] private GameObject pauseBtn;
     void Update(){
         if(isPaused && !hasPauseBeenCalled){
+            pauseBtn.SetActive(false);
             hasPauseBeenCalled = true;
             Show();
         }
@@ -30,7 +30,14 @@ public class PauseMenu : MonoBehaviour
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
+        pauseBtn.SetActive(true);
         isPaused = false;
         hasPauseBeenCalled = false;
+    }
+    public static void Pause(){
+        isPaused = true;
+    }
+    public static bool isPausedState(){
+        return isPaused;
     }
 }
