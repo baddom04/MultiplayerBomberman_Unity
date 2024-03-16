@@ -828,11 +828,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 11368019182273911, guid: 1db47c5ef25154fb1806822c25335042, type: 3}
+  i: 0
+  j: 0
   maxBombCount: 1
   currentBombs: 0
   isOnBomb: 0
   bombRadius: 1
-  powerUpDuration: 15
+  powerUpDuration: 12
   shield: {fileID: 1105129466}
 --- !u!4 &577378325 stripped
 Transform:
@@ -2044,6 +2046,7 @@ MonoBehaviour:
   - {fileID: 1729945580980676, guid: 7bc251a7285632341a306c70a8f1cfbe, type: 3}
   - {fileID: 1192983798335586, guid: 9e928de923724f54ea836e735efdd8b6, type: 3}
   - {fileID: 107744, guid: 0782c4fdae5f1624ba26300a1dc7a0a7, type: 3}
+  - {fileID: 132260, guid: 510349479745aac4b9209e9326e42601, type: 3}
   hasEndBeenCalled: 0
   crateChance: 0.2
   pickupChance: 0.15
@@ -2916,11 +2919,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 11368019182273911, guid: 1db47c5ef25154fb1806822c25335042, type: 3}
+  i: 0
+  j: 0
   maxBombCount: 1
   currentBombs: 0
   isOnBomb: 0
   bombRadius: 1
-  powerUpDuration: 15
+  powerUpDuration: 12
   shield: {fileID: 1342911672}
 --- !u!4 &2103721646 stripped
 Transform:

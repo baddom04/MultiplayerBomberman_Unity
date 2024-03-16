@@ -6,9 +6,9 @@ using UnityEngine;
 public class PlayerLogic : MonoBehaviour
 {
     [SerializeField] private GameObject bombPrefab;
-    private float bombWaitingTime = 3;
-    private int i;
-    private int j;
+    [SerializeField] private float bombWaitingTime = 3;
+    [SerializeField] private int i;
+    [SerializeField] private int j;
     private Rigidbody rb;
     private List<BombScript> bombs = new List<BombScript>();
     [SerializeField] private int maxBombCount = 1;
@@ -17,6 +17,7 @@ public class PlayerLogic : MonoBehaviour
     [SerializeField] private int bombRadius = 1;
     [SerializeField] private float powerUpDuration = 10f;
     [SerializeField] private GameObject shield;
+    [SerializeField] private bool detonator = false;
     private int last_i;
     private int last_j;
     void Start()
@@ -31,7 +32,6 @@ public class PlayerLogic : MonoBehaviour
         j = (int)((transform.position.x + 5 + GameController.gridSize / 2 * 10) / 10);
         if (CoordinateChanged())
         {
-            Debug.Log(i + " " + j);
             if (PlayerGoesWhereItShouldntBe())
             {
                 int x = (last_j - GameController.gridSize / 2) * 10;
@@ -69,7 +69,14 @@ public class PlayerLogic : MonoBehaviour
             bombs.Add(b);
             currentBombs++;
             isOnBomb = true;
-            StartCoroutine(BombCountDown(b));
+            if(!detonator) StartCoroutine(BombCountDown(b));
+        }
+        else{
+            currentBombs = 0;
+            foreach(BombScript bs in bombs){
+                bs.Detonation();
+            }
+            bombs.Clear();
         }
     }
     public bool CoordinateChanged()

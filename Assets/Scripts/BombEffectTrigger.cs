@@ -9,7 +9,6 @@ public class BombEffectTrigger : MonoBehaviour
         Instantiate(explosionPrefab, transform.position, Quaternion.identity, transform);
     }
     private void OnTriggerEnter(Collider other) {
-        Debug.Log(other.gameObject.tag);
         if(other.gameObject.CompareTag("Player")){
             if(!other.gameObject.GetComponent<PlayerLogic>().IsShielded()){
                 other.gameObject.SetActive(false);

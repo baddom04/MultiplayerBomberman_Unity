@@ -62,8 +62,8 @@ public class GameController : MonoBehaviour
             for (int j = 0; j < (gridSize + 2); j++)
             {
                 int x = (j - gridSize / 2 - 1) * 10;
-                int y = i * (gridSize / 2 + 1) * 10;
-                Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, y), Quaternion.identity, parentEnvironment);
+                int z = i * (gridSize / 2 + 1) * 10;
+                Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, z), Quaternion.identity, parentEnvironment);
             }
         }
         for (int i = -1; i < 2; i += 2)
@@ -71,8 +71,8 @@ public class GameController : MonoBehaviour
             for (int j = 0; j < gridSize; j++)
             {
                 int x = i * (gridSize / 2 + 1) * 10;
-                int y = (j - gridSize / 2) * 10;
-                Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, y), Quaternion.identity, parentEnvironment);
+                int z = (j - gridSize / 2) * 10;
+                Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, z), Quaternion.identity, parentEnvironment);
             }
         }
     }
@@ -83,16 +83,16 @@ public class GameController : MonoBehaviour
             for (int j = 0; j < gridSize; j++)
             {
                 int x = (j - gridSize / 2) * 10;
-                int y = (maxGridIndex - i - gridSize / 2) * 10;
+                int z = (maxGridIndex - i - gridSize / 2) * 10;
                 if (j % 2 == 1 && i % 2 == 1)
                 {
-                    level[i, j] = Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, y), Quaternion.identity, parentEnvironment);
+                    level[i, j] = Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, z), Quaternion.identity, parentEnvironment);
                 }
                 else if (CalculateChace(crateChance) && NotInPlayer(i, j))
                 {
-                    level[i, j] = Instantiate(cratePrefab, new Vector3(x, 0, y), Quaternion.identity, parentEnvironment);
+                    level[i, j] = Instantiate(cratePrefab, new Vector3(x, 0, z), Quaternion.identity, parentEnvironment);
                     if(CalculateChace(pickupChance))
-                        Instantiate(pickups[Random.Range(0, pickups.Length)], new Vector3(x, 3.5f, y), Quaternion.identity, parentEnvironment);
+                        Instantiate(pickups[Random.Range(0, pickups.Length)], new Vector3(x, 3.5f, z), Quaternion.identity, parentEnvironment);
                 }
             }
         }
