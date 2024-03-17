@@ -3,14 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerLogic : MonoBehaviour
+public class PlayerLogic : MovingObject
 {
     [SerializeField] private GameObject bombPrefab;
     [SerializeField] private float bombWaitingTime = 3;
-    [SerializeField] private int i;
-    [SerializeField] private int j;
-    private Rigidbody rb;
-    private List<BombScript> bombs = new List<BombScript>();
+    [SerializeField] private List<BombScript> bombs = new List<BombScript>();
     [SerializeField] private int maxBombCount = 1;
     [SerializeField] private int currentBombs = 0;
     [SerializeField] private bool isOnBomb = false;
@@ -18,30 +15,22 @@ public class PlayerLogic : MonoBehaviour
     [SerializeField] private float powerUpDuration = 10f;
     [SerializeField] private GameObject shield;
     [SerializeField] private bool detonator = false;
-    private int last_i;
-    private int last_j;
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        last_j = (int)((transform.position.x + 5 + GameController.gridSize / 2 * 10) / 10);
-        last_i = GameController.gridSize - 1 - (int)((transform.position.z + 5 + GameController.gridSize / 2 * 10) / 10);
+        CalculatePosition(ref last_i, ref last_j);
     }
     void Update()
     {
-        i = GameController.gridSize - 1 - (int)((transform.position.z + 5 + GameController.gridSize / 2 * 10) / 10);
-        j = (int)((transform.position.x + 5 + GameController.gridSize / 2 * 10) / 10);
+        CalculatePosition(ref i, ref j);
         if (CoordinateChanged())
         {
             if (PlayerGoesWhereItShouldntBe())
             {
-                int x = (last_j - GameController.gridSize / 2) * 10;
-                int z = (GameController.gridSize - 1 - last_i - GameController.gridSize / 2) * 10;
-                transform.position = new Vector3(x, 0, z);
+                transform.position = MiddleOfTile(last_i, last_j, 0);
             }
             else
             {
-                last_i = i;
-                last_j = j;
+                UpdatePosition();
                 if (isOnBomb)
                 {
                     bombs[bombs.Count - 1].GetComponent<Collider>().isTrigger = false;
@@ -55,34 +44,30 @@ public class PlayerLogic : MonoBehaviour
         GameObject[,] level = GameObject.Find("GameController").GetComponent<GameController>().level;
         return level[i, j] != null;
     }
-
     public void PlaceBomb()
     {
         if (currentBombs < maxBombCount)
         {
-            int x = (j - GameController.gridSize / 2) * 10;
-            int z = (GameController.gridSize - 1 - i - GameController.gridSize / 2) * 10;
-            BombScript b = Instantiate(bombPrefab, new Vector3(x, 2, z), Quaternion.identity).GetComponent<BombScript>();
-            b.i = i;
-            b.j = j;
-            b.radius = bombRadius;
+            BombScript b = CreateNewBomb();
             bombs.Add(b);
             currentBombs++;
             isOnBomb = true;
-            if(!detonator) StartCoroutine(BombCountDown(b));
+            if (!detonator) StartCoroutine(BombCountDown(b));
         }
-        else{
+        else if (detonator)
+        {
+            DetonateAllBombs();
             currentBombs = 0;
-            foreach(BombScript bs in bombs){
-                bs.Detonation();
-            }
             isOnBomb = false;
             bombs.Clear();
         }
     }
-    public bool CoordinateChanged()
+    private void DetonateAllBombs()
     {
-        return last_i != i || last_j != j;
+        foreach (BombScript bs in bombs)
+        {
+            bs.Detonation();
+        }
     }
     private IEnumerator BombCountDown(BombScript bs)
     {
@@ -91,11 +76,19 @@ public class PlayerLogic : MonoBehaviour
         bombs.RemoveAt(0);
         bs.Detonation();
     }
+    private BombScript CreateNewBomb()
+    {
+        BombScript b = Instantiate(bombPrefab, MiddleOfTile(i, j, 2), Quaternion.identity).GetComponent<BombScript>();
+        b.i = i;
+        b.j = j;
+        b.radius = bombRadius;
+        return b;
+    }
 
-    //Power-up functions
+    //*Power-up functions
     public void IncreaseRadius() { bombRadius++; }
     public void AddBomb() { maxBombCount++; }
-    public void Detonator(){ detonator = true; }
+    public void Detonator() { detonator = true; }
     public bool IsShielded() { return shield.activeInHierarchy; }
     public void ShieldUp()
     {

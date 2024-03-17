@@ -12,13 +12,10 @@ public class BombEffectTrigger : MonoBehaviour
         if(other.gameObject.CompareTag("Player")){
             if(!other.gameObject.GetComponent<PlayerLogic>().IsShielded()){
                 other.gameObject.SetActive(false);
-                GameController.gameOn = false;
+                GameController.GameOver();
             }
         }
         if(other.gameObject.CompareTag("Crate")){
-            Destroy(other.gameObject);
-        }
-        if(other.gameObject.CompareTag("BlockWall")){
             Destroy(other.gameObject);
         }
     }

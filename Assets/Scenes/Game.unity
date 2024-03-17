@@ -344,6 +344,7 @@ MonoBehaviour:
   animationDuration: 0.5
   distance: 80
   isMainMenu: 0
+  nextMenu: {fileID: 0}
 --- !u!1 &275405405
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +709,10 @@ PrefabInstance:
       propertyPath: speed
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 4752944985150519286, guid: 199d7ef3d613d8b4e8d5a519e49f9ce3, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1224949244}
     - target: {fileID: 4822095528580440021, guid: 199d7ef3d613d8b4e8d5a519e49f9ce3, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -829,8 +834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 11368019182273911, guid: 1db47c5ef25154fb1806822c25335042, type: 3}
   bombWaitingTime: 3
-  i: 0
-  j: 0
+  bombs: []
   maxBombCount: 1
   currentBombs: 0
   isOnBomb: 0
@@ -2050,9 +2054,9 @@ MonoBehaviour:
   - {fileID: 107744, guid: 0782c4fdae5f1624ba26300a1dc7a0a7, type: 3}
   - {fileID: 132260, guid: 510349479745aac4b9209e9326e42601, type: 3}
   - {fileID: 1744407837024274, guid: 2f3e352268bf84b45acf0d56b0b89518, type: 3}
-  hasEndBeenCalled: 0
   crateChance: 0.2
   pickupChance: 0.2
+  pauseMenu: {fileID: 1224949244}
 --- !u!4 &1307570192
 Transform:
   m_ObjectHideFlags: 0
@@ -2473,7 +2477,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit
+  m_text: Quit to Main Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ff9dfb9dcfa9b451da0749c3d2b449a9, type: 2}
   m_sharedMaterial: {fileID: 21956123629259200, guid: ff9dfb9dcfa9b451da0749c3d2b449a9, type: 2}
@@ -2902,6 +2906,10 @@ PrefabInstance:
       propertyPath: speed
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 8802333070823745431, guid: 8cfc28dfb62aede4196cb5ac4b39bbcb, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1224949244}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cfc28dfb62aede4196cb5ac4b39bbcb, type: 3}
 --- !u!1 &2103721640 stripped
@@ -2923,8 +2931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 11368019182273911, guid: 1db47c5ef25154fb1806822c25335042, type: 3}
   bombWaitingTime: 3
-  i: 0
-  j: 0
+  bombs: []
   maxBombCount: 1
   currentBombs: 0
   isOnBomb: 0

@@ -7,15 +7,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float upperSpeedBound = 16f;
-    private int bound = 45;
-    private Rigidbody rb;
-    private Animator anim;
+    [SerializeField] private int bound = GameController.gridSize / 2 * 10 + 5;
     [SerializeField] private string[] keys = new string[4];
-    private Dictionary<string, int> keyBinds = new Dictionary<string, int>();
+    [SerializeField] private Dictionary<string, int> keyBinds = new Dictionary<string, int>();
+    [SerializeField] private PauseMenu pauseMenu;
+    private Animator anim;
     private void Start()
     {
-        bound = GameController.gridSize / 2 * 10 + 5;
-        rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         for (int i = 0; i < 4; i++)
         {
@@ -24,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (GameController.gameOn && !PauseMenu.isPausedState())
+        if (GameController.gameOn && !pauseMenu.isPausedState())
         {
             MovePlayer();
             RestrictPlayer();
@@ -66,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("Static_b", false);
         anim.SetFloat("Speed_f", 0f);
     }
-    //Pickup functions
+    //*Power-up functions
     public void SpeedUp(){
         if(speed < upperSpeedBound) speed = upperSpeedBound;
     }

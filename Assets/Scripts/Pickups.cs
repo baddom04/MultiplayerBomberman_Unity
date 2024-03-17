@@ -31,6 +31,7 @@ public class Pickups : MonoBehaviour
                     playerScript.Detonator();
                     break;
                 default:
+                    Debug.Log("Not existing pickup tag!");
                     break;
             }
             Destroy(gameObject);

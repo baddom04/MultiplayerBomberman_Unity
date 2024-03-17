@@ -47,6 +47,5 @@ public class CameraScript : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 0), 0.1f);
             yield return new WaitForSeconds(0.01f);
         }
-        GameObject.Find("GameOverMenu").GetComponent<MainMenu>().Show();
     }
 }

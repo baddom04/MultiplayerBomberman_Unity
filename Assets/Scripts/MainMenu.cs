@@ -38,12 +38,17 @@ public class MainMenu : MonoBehaviour
         }
     }
     public void Quit(){
-        Application.Quit();
+        if(isMainMenu) Application.Quit();
+        else SceneManager.LoadScene("MainMenu");
     }
     public void NextMenu(){
         foreach(RectTransform rt in uiElements){
             rt.gameObject.SetActive(false);
         }
         nextMenu.GetComponent<SizeMenu>().Show();
+    }
+    public void NewGame(){
+        GameController.gameOn = true;
+        SceneManager.LoadScene("Game");
     }
 }

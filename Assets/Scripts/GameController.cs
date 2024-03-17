@@ -8,18 +8,18 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject boulderPrefab;
     [SerializeField] private GameObject cratePrefab;
-    public GameObject[,] level = new GameObject[gridSize, gridSize];
     [SerializeField] private GameObject[] pickups;
+    public GameObject[,] level = new GameObject[gridSize, gridSize];
     private Transform parentEnvironment;
     private PlayerLogic player1;
     private PlayerLogic player2;
     public static bool gameOn = true;
-    [SerializeField] private bool hasEndBeenCalled = false;
     private float boulderSpawnY = -1;
     public static int gridSize = 11;
     private int maxGridIndex = gridSize - 1;
     [SerializeField] private float crateChance = 0.2f;
     [SerializeField] private float pickupChance = 0.2f;
+    [SerializeField] private PauseMenu pauseMenu;
 
     void Start()
     {
@@ -30,18 +30,18 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        if (gameOn && !PauseMenu.isPausedState())
+        if (gameOn && !pauseMenu.isPausedState())
         {
             if (Input.GetKeyDown(KeyCode.M)) player1.PlaceBomb();
             if (Input.GetKeyDown(KeyCode.Space)) player2.PlaceBomb();
-            if (Input.GetKeyDown(KeyCode.Escape)) PauseMenu.Pause();
+            if (Input.GetKeyDown(KeyCode.Escape)) pauseMenu.Pause();
         }
-        else if (!gameOn && !hasEndBeenCalled)
-        {
-            hasEndBeenCalled = true;
-            GameObject.Find("PauseBtn").SetActive(false);
-            Camera.main.GetComponent<CameraScript>().TheEnd();
-        }
+    }
+    public static void GameOver()
+    {
+        GameObject.Find("PauseBtn").SetActive(false);
+        Camera.main.GetComponent<CameraScript>().TheEnd();
+        GameObject.Find("GameOverMenu").GetComponent<MainMenu>().Show();
     }
     private void InitiateMap()
     {
@@ -91,7 +91,7 @@ public class GameController : MonoBehaviour
                 else if (CalculateChace(crateChance) && NotInPlayer(i, j))
                 {
                     level[i, j] = Instantiate(cratePrefab, new Vector3(x, 0, z), Quaternion.identity, parentEnvironment);
-                    if(CalculateChace(pickupChance))
+                    if (CalculateChace(pickupChance))
                         Instantiate(pickups[Random.Range(0, pickups.Length)], new Vector3(x, 3.5f, z), Quaternion.identity, parentEnvironment);
                 }
             }
@@ -103,6 +103,6 @@ public class GameController : MonoBehaviour
     }
     private bool NotInPlayer(int i, int j)
     {
-        return (j != 0 || i != gridSize / 2 ) && (j != maxGridIndex || i != gridSize / 2);
+        return (j != 0 || i != gridSize / 2) && (j != maxGridIndex || i != gridSize / 2);
     }
 }
