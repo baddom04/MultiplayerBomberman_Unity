@@ -30,6 +30,8 @@ public class Pickups : MonoBehaviour
                 case "Detonator":
                     playerScript.Detonator();
                     break;
+                default:
+                    break;
             }
             Destroy(gameObject);
         }

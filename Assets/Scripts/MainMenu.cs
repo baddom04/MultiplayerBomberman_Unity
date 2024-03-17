@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Menu : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     [SerializeField] private RectTransform[] uiElements;
     [SerializeField] private float animationDuration = 0.5f;
     [SerializeField] private float distance = 80;
     [SerializeField] private bool isMainMenu;
+    [SerializeField] GameObject nextMenu;
     private void Start() {
         if(isMainMenu) Show();
     }
@@ -39,8 +40,10 @@ public class Menu : MonoBehaviour
     public void Quit(){
         Application.Quit();
     }
-    public void NewGame(){
-        GameController.gameOn = true;
-        SceneManager.LoadScene("Game");
+    public void NextMenu(){
+        foreach(RectTransform rt in uiElements){
+            rt.gameObject.SetActive(false);
+        }
+        nextMenu.GetComponent<SizeMenu>().Show();
     }
 }

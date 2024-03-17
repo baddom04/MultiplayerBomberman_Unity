@@ -2052,7 +2052,7 @@ MonoBehaviour:
   - {fileID: 1744407837024274, guid: 2f3e352268bf84b45acf0d56b0b89518, type: 3}
   hasEndBeenCalled: 0
   crateChance: 0.2
-  pickupChance: 1
+  pickupChance: 0.2
 --- !u!4 &1307570192
 Transform:
   m_ObjectHideFlags: 0
