@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject boulderPrefab;
     [SerializeField] private GameObject cratePrefab;
     [SerializeField] private GameObject[] pickups;
+    [SerializeField] private float crateChance = 0.2f;
+    [SerializeField] private float pickupChance = 0.2f;
+    [SerializeField] private PauseMenu pauseMenu;
     public GameObject[,] level = new GameObject[gridSize, gridSize];
     private Transform parentEnvironment;
     private PlayerLogic player1;
@@ -17,9 +20,7 @@ public class GameController : MonoBehaviour
     private float boulderSpawnY = -1;
     public static int gridSize = 11;
     private int maxGridIndex = gridSize - 1;
-    [SerializeField] private float crateChance = 0.2f;
-    [SerializeField] private float pickupChance = 0.2f;
-    [SerializeField] private PauseMenu pauseMenu;
+
 
     void Start()
     {
@@ -88,7 +89,7 @@ public class GameController : MonoBehaviour
                 {
                     level[i, j] = Instantiate(boulderPrefab, new Vector3(x, boulderSpawnY, z), Quaternion.identity, parentEnvironment);
                 }
-                else if (CalculateChace(crateChance) && NotInPlayer(i, j))
+                else if (CalculateChace(crateChance) && NotInPlayerColumn(i, j))
                 {
                     level[i, j] = Instantiate(cratePrefab, new Vector3(x, 0, z), Quaternion.identity, parentEnvironment);
                     if (CalculateChace(pickupChance))
@@ -101,8 +102,8 @@ public class GameController : MonoBehaviour
     {
         return UnityEngine.Random.Range(0, (int)(1 / chance)) == 0;
     }
-    private bool NotInPlayer(int i, int j)
+    private bool NotInPlayerColumn(int i, int j)
     {
-        return (j != 0 || i != gridSize / 2) && (j != maxGridIndex || i != gridSize / 2);
+        return j != 0 && j != maxGridIndex;
     }
 }

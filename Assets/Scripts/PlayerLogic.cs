@@ -13,8 +13,9 @@ public class PlayerLogic : MovingObject
     [SerializeField] private bool isOnBomb = false;
     [SerializeField] private int bombRadius = 1;
     [SerializeField] private float powerUpDuration = 10f;
-    [SerializeField] private GameObject shield;
+    [SerializeField] public GameObject shield;
     [SerializeField] private bool detonator = false;
+    [SerializeField] private float indicatorDuration = 3;
     void Start()
     {
         CalculatePosition(ref last_i, ref last_j);
@@ -86,6 +87,13 @@ public class PlayerLogic : MovingObject
     }
 
     //*Power-up functions
+    public void EffectDown(string name){
+        switch(name){
+            case "Shield":
+                ShieldDown();
+                break;
+        }
+    }
     public void IncreaseRadius() { bombRadius++; }
     public void AddBomb() { maxBombCount++; }
     public void Detonator() { detonator = true; }
@@ -95,9 +103,11 @@ public class PlayerLogic : MovingObject
         shield.SetActive(true);
         StartCoroutine(ShieldDown());
     }
-    IEnumerator ShieldDown()
+    private IEnumerator ShieldDown()
     {
-        yield return new WaitForSeconds(powerUpDuration);
+        yield return new WaitForSeconds(powerUpDuration - indicatorDuration);
+        shield.GetComponent<EffectFlickering>().EndIndicator();
+        yield return new WaitForSeconds(indicatorDuration);
         shield.SetActive(false);
     }
 }
