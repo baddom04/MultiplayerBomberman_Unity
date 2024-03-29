@@ -8,8 +8,8 @@ public class MapCreator
     private readonly GameObject _boulderPrefab;
     private readonly GameObject _cratePrefab;
     private readonly GameObject[] _pickups;
-    private readonly Transform _player1tf;
-    private readonly Transform _player2tf;
+    private readonly PlayerLogic _player1;
+    private readonly PlayerLogic _player2;
     private readonly Transform _parentEnvironment;
     private float _boulderSpawnY;
     private int _maxGridIndex;
@@ -22,16 +22,16 @@ public class MapCreator
         [Inject(Id = "crate")] GameObject cratePrefab,
         GameObject[] pickups,
         [Inject(Id = "environment")] Transform parentEnvironment,
-        [Inject(Id = "player1")] Transform player1tf,
-        [Inject(Id = "player2")] Transform player2tf
+        [Inject(Id = "player1")] PlayerLogic player1,
+        [Inject(Id = "player2")] PlayerLogic player2
         )
     {
         _boulderPrefab = boulderPrefab;
         _cratePrefab = cratePrefab;
         _parentEnvironment = parentEnvironment;
         _pickups = pickups;
-        _player1tf = player1tf;
-        _player2tf = player2tf;
+        _player1 = player1;
+        _player2 = player2;
         _boulderSpawnY = -1;
         _crateChance = 0.2f;
         _pickupChance = 0.2f;
@@ -47,8 +47,8 @@ public class MapCreator
     private void PlayerPositions(int gridSize)
     {
         int x = gridSize / 2 * 10;
-        _player1tf.position = new Vector3(x, _player1tf.position.y, _player1tf.position.z);
-        _player2tf.position = new Vector3(-x, _player2tf.position.y, _player2tf.position.z);
+        _player1.transform.position = new Vector3(x, _player1.transform.position.y, _player1.transform.position.z);
+        _player2.transform.position = new Vector3(-x, _player2.transform.position.y, _player2.transform.position.z);
     }
     private void OuterWalls(int gridSize)
     {
