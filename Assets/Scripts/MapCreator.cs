@@ -11,11 +11,11 @@ public class MapCreator
     private readonly PlayerLogic _player1;
     private readonly PlayerLogic _player2;
     private readonly Transform _parentEnvironment;
-    private float _boulderSpawnY;
+    private readonly float _boulderSpawnY;
+    private readonly float _crateChance;
+    private readonly float _pickupChance;
     private int _maxGridIndex;
     private GameObject[,] _level;
-    private float _crateChance;
-    private float _pickupChance;
 
     public MapCreator(
         [Inject(Id = "boulder")] GameObject boulderPrefab,
@@ -34,7 +34,7 @@ public class MapCreator
         _player2 = player2;
         _boulderSpawnY = -1;
         _crateChance = 0.2f;
-        _pickupChance = 0.2f;
+        _pickupChance = 1f;
     }
     public void InitiateMap(int gridSize)
     {
@@ -94,7 +94,7 @@ public class MapCreator
     }
     private bool CalculateChance(float chance)
     {
-        return UnityEngine.Random.Range(0, (int)(1 / chance)) == 0;
+        return Random.Range(0, (int)(1 / chance)) == 0;
     }
     private bool NotInPlayerColumn(int i, int j)
     {

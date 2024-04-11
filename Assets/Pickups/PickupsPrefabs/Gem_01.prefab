@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33037587276796832}
   - component: {fileID: 23769591346357710}
   - component: {fileID: -5080190603150232285}
-  - component: {fileID: -1675346871211433931}
+  - component: {fileID: -8676013270313979160}
   m_Layer: 0
   m_Name: Gem_01
   m_TagString: AddBomb
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: -0.000000022351742, z: 0}
---- !u!114 &-1675346871211433931
+--- !u!114 &-8676013270313979160
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,6 +105,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1192983798335586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638feaf2aeb08254ca092cb96b07ee69, type: 3}
+  m_Script: {fileID: 11500000, guid: 58b4cc93249f0084db0595e002ac0232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

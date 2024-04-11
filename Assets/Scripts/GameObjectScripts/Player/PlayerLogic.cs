@@ -2,20 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class PlayerLogic : MovingObject
 {
     [SerializeField] private GameObject bombPrefab;
     [SerializeField] private float bombWaitingTime = 3;
-    [SerializeField] private List<BombScript> bombs = new List<BombScript>();
+    [SerializeField] private List<Bomb> bombs = new List<Bomb>();
     [SerializeField] private int maxBombCount = 1;
     [SerializeField] private int currentBombs = 0;
     [SerializeField] private bool isOnBomb = false;
     [SerializeField] private int bombRadius = 1;
     [SerializeField] private float powerUpDuration = 10f;
-    [SerializeField] public GameObject shield;
     [SerializeField] private bool detonator = false;
     [SerializeField] private float indicatorDuration = 3;
+    [SerializeField] public bool IsGhost { get; set; } = false;
+    [SerializeField] public bool IsShielded { get; set; } = false;
+    [SerializeField] private GameObject shield;
+    [SerializeField] private GameObject ghost;
+
     void Start()
     {
         CalculatePosition(ref last_i, ref last_j);
@@ -25,7 +30,7 @@ public class PlayerLogic : MovingObject
         CalculatePosition(ref i, ref j);
         if (CoordinateChanged())
         {
-            if (PlayerGoesWhereItShouldntBe())
+            if (!IsGhost && PlayerGoesWhereItShouldntBe())
             {
                 transform.position = MiddleOfTile(last_i, last_j, 0);
             }
@@ -40,16 +45,17 @@ public class PlayerLogic : MovingObject
             }
         }
     }
+
     private bool PlayerGoesWhereItShouldntBe()
     {
-        GameObject[,] level = GameObject.Find("GameController").GetComponent<GameController>().GetLevel();
-        return level[i, j] != null;
+        return GameController.GetLevel()[i, j] != null;
     }
+
     public void PlaceBomb()
     {
         if (currentBombs < maxBombCount)
         {
-            BombScript b = CreateNewBomb();
+            Bomb b = CreateNewBomb();
             bombs.Add(b);
             currentBombs++;
             isOnBomb = true;
@@ -65,49 +71,61 @@ public class PlayerLogic : MovingObject
     }
     private void DetonateAllBombs()
     {
-        foreach (BombScript bs in bombs)
+        foreach (Bomb bs in bombs)
         {
             bs.Detonation();
         }
     }
-    private IEnumerator BombCountDown(BombScript bs)
+    private IEnumerator BombCountDown(Bomb b)
     {
         yield return new WaitForSeconds(bombWaitingTime);
         currentBombs--;
         bombs.RemoveAt(0);
-        bs.Detonation();
+        b.Detonation();
     }
-    private BombScript CreateNewBomb()
+    private Bomb CreateNewBomb()
     {
-        BombScript b = Instantiate(bombPrefab, MiddleOfTile(i, j, 2), Quaternion.identity).GetComponent<BombScript>();
-        b.i = i;
-        b.j = j;
-        b.radius = bombRadius;
+        Bomb b = Instantiate(bombPrefab).GetComponent<Bomb>();
+        b.Construct(MiddleOfTile(i, j, 2), i, j, bombRadius);
         return b;
     }
 
     //*Power-up functions
-    public void EffectDown(string name){
-        switch(name){
-            case "Shield":
-                ShieldDown();
-                break;
-        }
-    }
-    public void IncreaseRadius() { bombRadius++; }
+    public void AddRadius() { bombRadius++; }
     public void AddBomb() { maxBombCount++; }
     public void Detonator() { detonator = true; }
-    public bool IsShielded() { return shield.activeInHierarchy; }
     public void ShieldUp()
     {
-        shield.SetActive(true);
-        StartCoroutine(ShieldDown());
+        IsShielded = true;
+        BubbleUp(shield);
     }
-    private IEnumerator ShieldDown()
+    public void GhostUp()
+    {
+        IsGhost = true;
+        BubbleUp(ghost);
+        GetComponent<Collider>().enabled = false;
+    }
+    public void BubbleUp(GameObject bubble)
+    {
+        bubble.SetActive(true);
+        StartCoroutine(BubbleDown(bubble));
+    }
+    private IEnumerator BubbleDown(GameObject bubble)
     {
         yield return new WaitForSeconds(powerUpDuration - indicatorDuration);
-        shield.GetComponent<EffectFlickering>().EndIndicator();
+        bubble.GetComponent<EffectFlickering>().EndIndicator();
         yield return new WaitForSeconds(indicatorDuration);
-        shield.SetActive(false);
+        if(bubble.CompareTag("Ghost")){
+            GetComponent<Collider>().enabled = true;
+            if(PlayerGoesWhereItShouldntBe()){
+                gameObject.SetActive(false);
+                GameController.GameOver();
+            } 
+            IsGhost = false;
+        }
+        else if(bubble.CompareTag("Shield")){
+            IsShielded = false;
+        }
+        bubble.SetActive(false);
     }
 }

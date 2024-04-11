@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pickups : MonoBehaviour
+public abstract class Pickups : MonoBehaviour
 {
     private void Update()
     {
@@ -12,29 +12,9 @@ public class Pickups : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerLogic playerScript = other.gameObject.GetComponent<PlayerLogic>();
-            switch (gameObject.tag)
-            {
-                case "AddRadius":
-                    playerScript.IncreaseRadius();
-                    break;
-                case "AddBomb":
-                    playerScript.AddBomb();
-                    break;
-                case "Speed":
-                    other.gameObject.GetComponent<PlayerMovement>().SpeedUp();
-                    break;
-                case "Shield":
-                    playerScript.ShieldUp();
-                    break;
-                case "Detonator":
-                    playerScript.Detonator();
-                    break;
-                default:
-                    Debug.Log("Not existing pickup tag!");
-                    break;
-            }
+            DoEffect(other.gameObject.GetComponent<PlayerLogic>());
             Destroy(gameObject);
         }
     }
+    protected abstract void DoEffect(PlayerLogic playerLogic);
 }

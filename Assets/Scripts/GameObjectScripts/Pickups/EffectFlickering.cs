@@ -6,7 +6,7 @@ public class EffectFlickering : MonoBehaviour
 {
     [SerializeField] private Color color;
     [SerializeField] private float bound;
-    [SerializeField] public new Renderer renderer;
+    [SerializeField] private new Renderer renderer;
     private void Awake() {
         renderer = GetComponent<Renderer>();
         color = renderer.material.color;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class BasicMonster : MovingObject
 {
@@ -38,11 +39,10 @@ public class BasicMonster : MovingObject
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (!other.gameObject.GetComponent<PlayerLogic>().IsShielded())
+            if (!other.gameObject.GetComponent<PlayerLogic>().IsShielded)
             {
                 other.gameObject.SetActive(false);
-                // TODO: game-over event
-                // GameController.GameOver();
+                GameController.GameOver();
             }
         }
         else if (!other.gameObject.CompareTag("Monster"))

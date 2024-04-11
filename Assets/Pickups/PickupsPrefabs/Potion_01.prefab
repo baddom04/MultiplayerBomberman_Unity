@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33552534451620232}
   - component: {fileID: 23009684181448838}
   - component: {fileID: 1226576632324267067}
-  - component: {fileID: 1837035412864385305}
+  - component: {fileID: 1726964426274166667}
   m_Layer: 0
   m_Name: Potion_01
   m_TagString: Shield
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1837035412864385305
+--- !u!114 &1726964426274166667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,6 +105,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1744407837024274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638feaf2aeb08254ca092cb96b07ee69, type: 3}
+  m_Script: {fileID: 11500000, guid: 7828aaed717c36a45acfdd712a29b2d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

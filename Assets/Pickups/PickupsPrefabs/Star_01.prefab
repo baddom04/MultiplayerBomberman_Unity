@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33118119716790622}
   - component: {fileID: 23114244185766776}
   - component: {fileID: 8875485562228503159}
-  - component: {fileID: -2555512569206065609}
+  - component: {fileID: 2840105235703549610}
   m_Layer: 0
   m_Name: Star_01
   m_TagString: AddRadius
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0.000000007450581, z: 0.0000000018626451}
---- !u!114 &-2555512569206065609
+--- !u!114 &2840105235703549610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,6 +105,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1729945580980676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638feaf2aeb08254ca092cb96b07ee69, type: 3}
+  m_Script: {fileID: 11500000, guid: 89d7bd4a1262a914eaeed9a04bd2ad71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

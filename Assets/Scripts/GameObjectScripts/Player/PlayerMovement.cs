@@ -7,13 +7,14 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float upperSpeedBound = 16f;
-    [SerializeField] private int bound = GameController.gridSize / 2 * 10 + 5;
+    [SerializeField] private float bound;
     [SerializeField] private string[] keys = new string[4];
     [SerializeField] private Dictionary<string, int> keyBinds = new Dictionary<string, int>();
     [SerializeField] private PauseMenu pauseMenu;
     private Animator anim;
     private void Start()
     {
+        bound = GameController.gridSize / 2f * 10;
         anim = GetComponent<Animator>();
         for (int i = 0; i < 4; i++)
         {
